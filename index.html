@@ -3,71 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>simple project</title>
+    <title>Mobile Menu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Navbar styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            font-weight: bold;
+            font-size: 20px;
+            color: #6070ff;
+            text-decoration: none;
+        }
+        
+        /* Hamburger menu button */
+        .menu-btn {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+            z-index: 100;
+        }
+        
+        .menu-btn span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: #6070ff;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        /* Desktop menu */
+        .desktop-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .desktop-menu li {
+            margin-left: 30px;
+        }
+        
+        .desktop-menu a {
+            text-decoration: none;
+            color: #344563;
+            font-weight: 500;
+        }
+        
+        /* Mobile menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: rgba(96, 112, 255, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding-left: 28px;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: 90;
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        
+        .mobile-menu li {
+            margin: 20px 0;
+            list-style: none;
+        }
+        
+        .mobile-menu a {
+            color: white;
+            font-size: 32px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 30px;
+            right: 20px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .desktop-menu {
+                display: none;
+            }
+            
+            .menu-btn {
+                display: flex;
+            }
+        }
+        
+        @media (min-width: 769px) {
+            .mobile-menu {
+                display: none;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 </head>
 <body>
-<h1>semawit</h1>
-<h2>About me</h2>
-<P> Hello my name is semawit, and i am passinate about noddles.i love sleeping.
-</P>
-<h2>My hobbies</h2>
-<ul>
-    <li>Slepping</li>
-    <li>talking </li>
-    <li>eating </li>
-    <li>singing</li>
-</ul>
-<h2>My Goals</h2>
-<ol>
-    <li>improving codding skill</li>
-    <li>Traveling</li>
-    <li>eating well organised food by my husband </li>
-</ol>
-
-<h2>Contact me </h2>
-<label>You can reach me at </label>
-<a href="">My personal website</a> 
-<h2>My favorite Image</h2>
-<img src="./goal1.png" alt="am cat person " width="200px"/>
-
-
-<form>
-<h2>Feedback Form</h2>
-<label>Name:</label>
-<input type="text"/><br>
-<label>Gender:</label>
-<input type="radio" name="gender"/>
-    <label>male</label>
-    <input type="radio" name="gender"/>
-    <label>female</label>
-    <input type="radio" name="gender"/>
-    <label>Non-binary</label><br>
-    <br>
-<lebel>select your Hobbies</lebel>
-<input type="checkbox"/><lebel> Reading</lebel>
-    <input type="checkbox"/><lebel> Sport</lebel>
-    <input type="checkbox"/><lebel> Music</lebel>
-    <input type="checkbox"/><lebel> Traveling</lebel>
-    <br>
-    <br>
-<label>Favorite programming language</label>
-<select>
-    <option>JavaScript</option>
-        <option>python</option>
-        <option>Java</option>
-        <option>C#</option>
-        <option>Php</option>
-        <option>Ruby</option>
-
-</select>
-<br>
-<br>
-<label>Additional comments</label><br>
-<textarea>
-
-</textarea>
-
-</form>
+    <nav class="navbar">
+        <a href="#" class="logo">My Logo</a>
+        
+        <!-- Desktop Menu -->
+        <ul class="desktop-menu">
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        
+        <!-- Mobile Menu Button -->
+        <div class="menu-btn" id="menuBtn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
     
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <span class="close-btn" id="closeBtn">&times;</span>
+        <ul>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </div>
+    
+    <script>
+        // Mobile menu functionality
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const closeBtn = document.getElementById('closeBtn');
+        
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+        });
+        
+        closeBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+        });
+    </script>
 </body>
 </html>
